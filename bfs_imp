@@ -1,0 +1,35 @@
+#include <iostream>
+#include<bits/stdc++.h>
+
+using namespace std;
+
+int main()
+{
+    int m,n;
+    cin>>m>>n;
+    vector<vector<int>> edges(m,vector<int> (2));
+    for(int i=0;i<n;i++){
+        for(int j=0;j<2;j++) cin>>edges[i][j];
+    }
+    // converting to adj
+    vector<vector<int>> adj(m);
+    for(int i=0;i<n;i++){
+        adj[edges[i][0]].push_back(edges[i][1]);
+    }
+    //bfs
+    queue<int> q;
+    q.push(0);
+    vector<bool> vst(m,false);
+    while(q.size()){
+       int node= q.front();
+       q.pop();
+       cout<<node<<" ";
+       for(auto it: adj[node]){
+           if(!vst[it]){
+               q.push(it);
+               vst[it]= true;
+           }
+       }
+    }
+    return 0;
+}
