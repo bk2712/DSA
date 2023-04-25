@@ -1,0 +1,29 @@
+bool check(TreeNode* r,vector<TreeNode*> &v, TreeNode* tar){
+    if(!r) return false;
+    v.push_back(r);
+    if(r==tar) return true;
+    bool a= false,b= false;
+    a= check(r->left,v,tar);
+    b= check(r->right,v,tar);
+    // return a|b;
+    if(a|b) return true;
+    v.pop_back();
+    return false;
+}
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        vector<TreeNode* > v1,v2;
+        check(root,v1,p);
+        check(root,v2,q);
+        unordered_set<TreeNode*> st;
+        reverse(v2.begin(),v2.end());
+        for(auto p: v1){
+            // cout<<p->val<<" ";
+            st.insert(p);
+        }
+        // cout<<endl;
+        for(auto p: v2){
+            // cout<<p->val<<" ";
+            if(st.find(p)!=st.end()) return p;
+        }
+        return NULL;
+    }
