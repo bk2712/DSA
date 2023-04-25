@@ -1,0 +1,18 @@
+int ind;
+TreeNode* check(vector<int> &post, unordered_map<int,int> &mp,int st,int end){
+    if(ind<0 || st>end) return NULL;
+    TreeNode* root= new TreeNode(post[ind]);
+    int pos= mp[post[ind]];
+    ind--;
+    root->right= check(post,mp,pos+1,end);
+    root->left= check(post,mp,st,pos-1);
+    return root;
+}
+    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+        unordered_map<int,int> mp;
+        int n= inorder.size();
+        ind= n-1;
+        for(int i=0;i<n;i++) mp[inorder[i]]=i;
+        TreeNode* root= check(postorder,mp,0,n-1);
+        return root;
+    }
