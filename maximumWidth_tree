@@ -1,0 +1,21 @@
+int widthOfBinaryTree(TreeNode* root) {
+        queue<pair<TreeNode*, long long>> q;             //q me hmm push krr rhe h node + uska width
+        q.push({root,0});
+        long long ans= 0;
+        while(q.size()){
+            long long n= q.size();
+            long long ind= q.front().second;        // ye wla ind hr level pe left wle child ko pkdega so ye hmesha minimum hi hoga
+            long long first,last;
+            for(int i=0;i<n;i++){
+                long long curr= q.front().second-ind;    // n time hrr child ko hmm ind se minus kreenge or use queue me push krenge
+                TreeNode* temp= q.front().first;
+                q.pop();
+                if(i==0) first= curr;
+                if(i==n-1) last= curr;
+                if(temp->left) q.push({temp->left, 2*curr+1});             
+                if(temp->right) q.push({temp->right,2*curr+2});
+            }
+            if(ans<last-first+1) ans= last-first+1;           //last wle level pe width hmesha hi maximum hogi
+        }
+        return ans;
+    }
