@@ -1,0 +1,71 @@
+int timetoinfect(TreeNode* root, map<TreeNode*, TreeNode*> parent)
+    {
+        map<TreeNode*, bool> vst;
+        queue<pair<TreeNode*,int>> q;
+        q.push({root,0});
+        vst[root] = true;
+        int time=0;
+        while(!q.empty())
+        {
+            int n = q.size();
+            int t= q.front().second;
+            while(n--)
+            {
+                TreeNode* temp = q.front().first; 
+                q.pop();
+                vst[temp] = true;
+
+                if(temp->left && !vst[temp->left])
+                {
+                    q.push({temp->left,t+1});
+                    vst[temp->left] = true;
+                }
+
+                if(temp->right && !vst[temp->right])
+                {
+                    q.push({temp->right,t+1});
+                    vst[temp->right] = true;
+                }
+
+                if(parent[temp] && !vst[parent[temp]])
+                {
+                    q.push({parent[temp],t+1});
+                    vst[parent[temp]] = true;
+                }
+            }
+            time= max(time,t);
+        }
+        return time;
+    }
+   TreeNode* makeParent(TreeNode* root, map<TreeNode*, TreeNode*> &parent, int start)
+    {
+        TreeNode* target;
+        queue<TreeNode*> q;
+        q.push(root);
+        while(!q.empty())
+        {
+            TreeNode* node = q.front();
+            q.pop();
+            if(node->val == start) 
+                target = node;
+            if(node->left)
+            {
+                q.push(node->left);
+                parent[node->left] = node;
+            }
+            if(node->right)
+            {
+                q.push(node->right);
+                parent[node->right] = node;
+            }
+        }
+        return target;
+    }
+    int amountOfTime(TreeNode* root, int start) 
+    {
+        map<TreeNode*, TreeNode*> parent;
+        TreeNode* target = makeParent(root, parent, start);
+        int maxi = timetoinfect(target, parent);
+        return maxi;
+        
+    }
