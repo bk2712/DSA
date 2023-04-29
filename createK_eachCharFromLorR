@@ -1,0 +1,36 @@
+class Solution {
+public:
+bool check(unordered_map<char,int> &mp,int k){
+    if(mp['a']>=k && mp['b']>=k && mp['c']>=k) return true;
+    return false;
+}
+bool valid(string s,int len,int k){
+    unordered_map<char,int> mp1;
+    for(int i=0;i<len;i++) mp1[s[i]]++;
+    if(check(mp1,k)) return true;
+    int i= len-1,j= s.length()-1;
+    while(i>=0){
+        mp1[s[i]]--;
+        if(mp1[s[i]]==0) mp1.erase(s[i]);
+        mp1[s[j]]++;
+        if(check(mp1,k)) return true;
+        i--;
+        j--;
+    }
+    return false;
+}
+    int takeCharacters(string s, int k) {
+        int st=0,end= s.length(),ans= -1;
+        unordered_map<char,int> mp;
+        for(int i=0;i<s.length();i++) mp[s[i]]++;
+        if(mp['a']<k || mp['b']<k || mp['c']<k) return -1;
+        while(st<=end){
+            int mid= st+(end-st)/2;
+            if(valid(s,mid,k)){
+                ans= mid;
+                end= mid-1;
+            }else st= mid+1;
+        }
+        return ans;
+    }
+};
