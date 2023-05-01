@@ -1,5 +1,4 @@
-int findSubarray(){
-        unordered_map<int,int> mp;
+unordered_map<int,int> mp;
         int n= nums.size(),sum=0,cnt=0;
         for(int i=0;i<n;i++) nums[i]%= k;
         mp[0]= 1;
@@ -12,4 +11,3 @@ int findSubarray(){
             mp[sum]++;
         }
         return cnt;
-}
