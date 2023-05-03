@@ -1,0 +1,16 @@
+bool canArrange(vector<int>& arr, int k) {
+        int n= arr.size();
+        unordered_map<int,int> mp;
+        for(int i=0;i<n;i++){
+            int rem= (arr[i]%k+k)%k;
+            if(rem==0 && mp.find(0)!=mp.end()){
+                mp[0]--;
+                if(mp[0]==0) mp.erase(0);
+            }else if(mp.find(k-rem)!=mp.end()){
+                mp[k-rem]--;
+                if(mp[k-rem]==0) mp.erase(k-rem);
+            }
+            else mp[rem]++;
+        }
+        return mp.size()==0;
+    }
