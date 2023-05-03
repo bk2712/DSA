@@ -1,0 +1,24 @@
+class Solution {
+public:
+bool sol(set<string> &st,string s,int ind,vector<int> &dp){
+    if(ind>=s.length()) return true;
+    if(dp[ind]!=-1) return dp[ind];
+    string temp="";
+    for(int i=ind;i<s.length();i++){
+        temp+= s[i];
+        if(st.find(temp)!=st.end()){
+            bool a= sol(st,s,i+1,dp);
+            if(a) return dp[ind]= true;
+        }
+    }
+    return dp[ind]= false;
+}
+    bool wordBreak(string s, vector<string>& nums) {
+        int n= nums.size();
+        vector<int> dp(s.size(),-1);
+        set<string> st;
+        for(int i=0;i<n;i++) st.insert(nums[i]);
+        return sol(st,s,0,dp);
+        
+    }
+};
