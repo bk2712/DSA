@@ -1,0 +1,46 @@
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+class disjoint{
+    vector<int> size,par;
+    public:
+    // vector<int> size,par;
+    disjoint(int n){
+        size.resize(n+1,1);
+        par.resize(n+1);
+        for(int i=0;i<=n;i++) par[i]= i;
+    }
+    
+    int find_upar(int node){
+        if(node==par[node]) return node;
+        return par[node]= find_upar(par[node]);
+    }
+    void union_by_size(int u,int v){
+        int ul_u= find_upar(u);
+        int ul_v= find_upar(v);
+        if(ul_u==ul_v) return;
+        if(size[ul_u]<size[ul_v]){
+            par[ul_u]= ul_v;
+            size[ul_v]+= size[ul_u];
+        }else{
+            par[ul_v]= ul_u;
+            size[ul_u]+= size[ul_v];
+        }
+    }
+};
+int main() {
+    
+    disjoint ds(7);
+    ds.union_by_size(1,2);
+    ds.union_by_size(2,3);
+    ds.union_by_size(4,5);
+    ds.union_by_size(6,7);
+    ds.union_by_size(5,6);
+    if(ds.find_upar(3)==ds.find_upar(7)) cout<<"YES"<<endl;
+    else cout<<"NO"<<endl;
+    ds.union_by_size(3,7);
+    if(ds.find_upar(3)==ds.find_upar(7)) cout<<"YES"<<endl;
+    else cout<<"NO"<<endl;
+
+    return 0;
+}
