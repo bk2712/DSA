@@ -1,0 +1,21 @@
+void sol(vector<int> &nums,int n,int ind,int k,int &ans,vector<int> &bag){
+    if(ind==n){
+        int maxi= INT_MIN;
+        for(int i=0;i<k;i++)
+            maxi= max(maxi,bag[i]);
+        ans= min(ans,maxi);
+        return;
+    }
+    for(int i=0;i<k;i++){
+        bag[i]+= nums[ind];
+        sol(nums,n,ind+1,k,ans,bag);
+        bag[i]-= nums[ind];
+    }
+}
+    int distributeCookies(vector<int>& nums, int k) {
+        int n= nums.size();
+        vector<int> bag(k,0);
+        int ans= INT_MAX;
+        sol(nums,n,0,k,ans,bag);
+        return ans;
+    }
