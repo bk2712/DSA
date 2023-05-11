@@ -1,0 +1,14 @@
+public:int mod= 1e9+7;
+	int sol(int nums[],int ind,int tar,int n,vector<vector<int>> &dp){
+	    if(ind==n) return tar==0;
+	    if(dp[ind][tar]!=-1) return dp[ind][tar];
+	    int take=0;
+	    if(tar>= nums[ind]) take= sol(nums,ind+1,tar-nums[ind],n,dp);
+	    int nottake= sol(nums,ind+1,tar,n,dp);
+	    return dp[ind][tar]= (take+nottake)%mod;
+	}
+	int perfectSum(int arr[], int n, int sum)
+	{
+	    vector<vector<int>> dp(n,vector<int> (sum+1,-1));
+	    return sol(arr,0,sum,n,dp);
+	}
