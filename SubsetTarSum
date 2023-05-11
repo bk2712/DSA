@@ -1,0 +1,16 @@
+bool sol(vector<int> &nums,int ind,int tar,int n,vector<vector<int>> &dp){
+    if(ind>=n) return false;
+    if(tar==0) return true;
+    if(ind==n-1) return nums[ind]==tar;
+    // if(ind==n) return false; 
+    if(dp[ind][tar]!=-1) return dp[ind][tar];
+    bool taken=false,nottaken= false;
+    if(nums[ind]<=tar) taken= sol(nums,ind+1,tar-nums[ind],n,dp);
+    nottaken= sol(nums,ind+1,tar,n,dp);
+    return dp[ind][tar]= taken|nottaken;
+}
+    bool isSubsetSum(vector<int>arr, int sum){
+        int n= arr.size();
+        vector<vector<int>> dp(n+1,vector<int> (sum+1,-1));
+        return sol(arr,0,sum,n,dp);
+    }
