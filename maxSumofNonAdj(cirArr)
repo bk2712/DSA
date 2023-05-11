@@ -1,0 +1,24 @@
+class Solution {
+public:
+int sol(vector<int> &nums,int n,int ind,vector<int> &dp){
+        if(ind>=n) return 0;
+        if(dp[ind]!=-1) return dp[ind];
+        int take= nums[ind]+sol(nums,n,ind+2,dp);
+        int nottake= sol(nums,n,ind+1,dp);
+        return dp[ind]= max(take,nottake);
+    }
+    int rob(vector<int>& nums) {
+        int n= nums.size();
+        if(n==1) return nums[0];
+        vector<int> dp(n-1,-1);
+    int st= nums[0],end= nums[n-1];
+    nums.pop_back();
+    int a= sol(nums,n-1,0,dp);
+    nums.erase(nums.begin());
+    nums.push_back(end);
+    dp.clear();
+    dp.resize(n-1,-1);
+    int b= sol(nums,n-1,0,dp);
+    return max(a,b);
+    }
+};
