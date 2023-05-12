@@ -1,3 +1,5 @@
+// 0/1 knapsack with limited supply
+
 int sol(int wt[], int val[],int ind,int tar,int n,vector<vector<int>> &dp){
         if(ind==n-1){
             if(wt[ind]<=tar) return val[ind];
@@ -13,4 +15,23 @@ int sol(int wt[], int val[],int ind,int tar,int n,vector<vector<int>> &dp){
     { 
         vector<vector<int>> dp(n,vector<int> (W+1,-1));
         return sol(wt,val,0,W,n,dp);
+    }
+
+
+  //unbounded knapsack infinite suppply
+int sol(int wt[],int val[], int ind,int n,int tar,vector<vector<int>> &dp){
+    if(ind==n-1){
+        if(wt[ind]<=tar) return val[ind]*(tar/wt[ind]);
+        else return 0;
+    }
+    if(dp[ind][tar]!=-1) return dp[ind][tar];
+    int take= 0;
+    if(wt[ind]<=tar) take= val[ind]+sol(wt,val,ind,n,tar-wt[ind],dp);
+    int nottake= sol(wt,val,ind+1,n,tar,dp);
+    return dp[ind][tar]= max(take,nottake);
+}
+    int knapSack(int N, int W, int val[], int wt[])
+    {
+        vector<vector<int>> dp(N,vector<int> (W+1,-1));
+        return sol(wt,val,0,N,W,dp);
     }
