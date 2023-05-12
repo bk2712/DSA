@@ -1,0 +1,16 @@
+int sol(int wt[], int val[],int ind,int tar,int n,vector<vector<int>> &dp){
+        if(ind==n-1){
+            if(wt[ind]<=tar) return val[ind];
+            return 0;
+        }
+        if(dp[ind][tar]!=-1) return dp[ind][tar];
+        int take=0;
+        if(wt[ind]<=tar) take= sol(wt,val,ind+1,tar-wt[ind],n,dp)+val[ind];
+        int nottake= sol(wt,val,ind+1,tar,n,dp);
+        return dp[ind][tar]= max(take,nottake);
+    }
+    int knapSack(int W, int wt[], int val[], int n) 
+    { 
+        vector<vector<int>> dp(n,vector<int> (W+1,-1));
+        return sol(wt,val,0,W,n,dp);
+    }
