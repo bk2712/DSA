@@ -1,0 +1,16 @@
+long long sol(int coins[],int n,int ind,int tar,vector<vector<long long>> &dp){
+	   if(tar==0) return 1;
+	    if(ind==n-1){
+	        if(tar%coins[ind]==0) return 1;
+	        return 0;
+	    }
+	    if(dp[ind][tar]!=-1) return dp[ind][tar];
+	    long long take= 0;
+	    if(tar>=coins[ind]) take= sol(coins,n,ind,tar-coins[ind],dp);
+	    long long nottake= sol(coins,n,ind+1,tar,dp);
+	    return dp[ind][tar]= take+nottake;
+	}
+    long long int count(int coins[], int N, int sum) {
+        vector<vector<long long>> dp(N,vector<long long> (sum+1,-1));
+        return sol(coins,N,0,sum,dp);
+    }
