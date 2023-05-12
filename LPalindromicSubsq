@@ -19,3 +19,6 @@ int n= s.length();
         
         //min insertion to make string palindromic k lie n- (ans of LPalindromicSubsq)
         
+        
+        //min insertion and deletion k lie m+n-2*dp[i][j]  krna h
+        
