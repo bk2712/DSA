@@ -1,0 +1,21 @@
+class Solution {
+public:
+    ListNode *detectCycle(ListNode *head) {
+        if(!head || !head->next) return NULL;
+        ListNode* p= head;
+        ListNode* q= head;
+        ListNode* entry= head;
+        while(q && q->next){
+            p=p->next;
+            q=q->next->next;
+            if(p==q){
+                while(entry!=p){
+                    p=p->next;
+                    entry=entry->next;
+                }
+                return p;
+            }
+        }
+        return NULL;
+    }
+};
