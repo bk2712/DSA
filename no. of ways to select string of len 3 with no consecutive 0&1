@@ -1,0 +1,14 @@
+long long sol(string&s,int ind,int n,int tar,int last,vector<vector<vector<long long>>> &dp){
+    if(ind>=n) return tar==0;
+    if(tar==0) return 1;
+    if(dp[ind][tar][last]!=-1) return dp[ind][tar][last];
+    long long a=0,b=0;
+    if(last==-1 || last!= s[ind]-'0') a= sol(s,ind+1,n,tar-1,s[ind]-'0',dp);
+    b= sol(s,ind+1,n,tar,last,dp);
+    return dp[ind][tar][last]= a+b;
+}
+    long long numberOfWays(string s) {
+        int n= s.length();
+        vector<vector<vector<long long>>> dp(n,vector<vector<long long>> (4,vector<long long> (4,-1)));
+        return sol(s,0,n,3,3,dp);
+    }
