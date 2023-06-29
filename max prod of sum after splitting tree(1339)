@@ -1,0 +1,21 @@
+class Solution {
+public:
+long long mod= 1e9+7,ans;
+long long totalSum(TreeNode* root){
+    if(!root) return 0;
+    return root->val+totalSum(root->left)+totalSum(root->right);
+}
+long long maxProd(TreeNode* root, long long sum){
+    if(!root) return 0;
+    long long sumy= 0;
+    sumy= root->val+maxProd(root->left,sum)+maxProd(root->right,sum);
+    ans= max(ans,sumy*(sum-sumy));
+    return sumy;
+}
+long long maxProduct(TreeNode* root) {
+        long long sum= totalSum(root);
+        ans =0;
+        maxProd(root,sum);
+        return ans%mod;
+    }
+};
