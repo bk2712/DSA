@@ -1,0 +1,15 @@
+long long ans= 0;
+void path(TreeNode* root,long long tar){
+    if(!root) return;
+    if(tar==root->val) ans++;
+    path(root->left,tar-root->val);
+    path(root->right,tar-root->val);
+
+}
+    int pathSum(TreeNode* root, int targetSum) {
+        if(!root) return 0;
+        path(root,targetSum);
+        if(root->left) pathSum(root->left,targetSum);
+        if(root->right) pathSum(root->right,targetSum);
+        return ans;
+    }
