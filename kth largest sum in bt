@@ -1,0 +1,24 @@
+long long kthLargestLevelSum(TreeNode* root, int k) {
+        long long sum=0;
+        queue<pair<TreeNode*,int>> q;
+        priority_queue<long long, vector<long long>, greater<long long>> pq;
+        q.push({root,0});
+        while(q.size()){
+            int n= q.size();
+            int lvl= q.front().second;
+            sum=0;
+            while(n--){
+                TreeNode* temp= q.front().first;
+                sum+= temp->val;
+                if(temp->left) q.push({temp->left,lvl+1});
+                if(temp->right) q.push({temp->right,lvl+1});
+                q.pop();
+            }
+            cout<<sum<<" "; 
+            pq.push(sum);
+            if(pq.size()>k) pq.pop();
+        }
+        if(pq.size()<k) return -1;
+        return pq.top();
+
+    }
