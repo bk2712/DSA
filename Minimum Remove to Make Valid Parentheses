@@ -1,0 +1,17 @@
+string minRemoveToMakeValid(string s) {
+        stack<int> st;
+        for(int i=0;i<s.length();i++){
+            if(s[i]=='(') st.push(i);
+            else if(s[i]==')'){
+                if(st.size() && s[st.top()]=='(') st.pop();
+                else st.push(i);
+            }
+        }
+        while(st.size()){
+            int a= st.top();
+            s.erase(a,1);
+            // cout<<a<<" ";
+            st.pop();
+        }
+        return s;
+    }
