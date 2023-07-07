@@ -1,0 +1,18 @@
+static bool comp(string a,string b){
+    return a+b>b+a;
+}
+    string largestNumber(vector<int>& nums) {
+        vector<string> v(nums.size());
+        for(int i=0;i<nums.size();i++){
+            string a= to_string(nums[i]);
+            v[i]= a;
+        }
+        sort(v.begin(),v.end(),comp);
+        if(v[0]=="0") return v[0];
+        string ans="";
+        for(auto it: v){
+            cout<<it<<" ";
+            ans+=it;
+        }
+        return ans;
+    }
